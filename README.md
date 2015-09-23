@@ -7,6 +7,7 @@ To build code for this project the following tools/software is required!
   - [Thunderbot Robot Controller](https://github.com/OutoftheBoxFTC/Thunderbots-Robot-Controller) - An enhanced version of the FTC distributed app can load jars instead.
   - [Java 6](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html#jdk-6u45-oth-JPR) - The java version used to write the code.
   - [Android File Transfer](https://www.android.com/filetransfer/) - Required to install the code onto the device and view the files within the device.
+  - [Maven](https://maven.apache.org/) - Dependency management system and source compiler.
   - [IntelliJ *(optional)*](https://www.jetbrains.com/idea/download/) - The teams official IDE although eclipse, netbeans or other alternatives are ok too.
 
 ### Installation 

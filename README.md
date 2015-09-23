@@ -11,13 +11,13 @@ To build code for this project the following tools/software is required!
 
 ### Installation 
 To install onto the device you will need to have all of the required dependencies. The required steps to install the codebase follows:
-1. Compile the code into a jar that includes and necessary dependencies bundled into package.
-2. Open up the Android File Transfer Application
-3. Navigate to the SD-Card and create a ```/FIRST/``` folder if there is not a preexisting folder.
-4. Rename the jar to ```OTB-RELEASE.jar``` or ```OTB-TESTING.jar``` depending on the release type.
-5. Copy the renamed jar into the ```/FIRST/```  folder.
-6. Close the *Thunderbot Robot Controller* if it is open.
-7. Launch the robot controller and proceed with your tests
+  1. Compile the code into a jar that includes and necessary dependencies bundled into package.
+  2. Open up the Android File Transfer Application
+  3. Navigate to the SD-Card and create a ```/FIRST/``` folder if there is not a preexisting folder.
+  4. Rename the jar to ```OTB-RELEASE.jar``` or ```OTB-TESTING.jar``` depending on the release type.
+  5. Copy the renamed jar into the ```/FIRST/```  folder.
+  6. Close the *Thunderbot Robot Controller* if it is open.
+  7. Launch the robot controller and proceed with your tests
 
 ### Contribution Policy 
 ##### The roles of the branches goes as following

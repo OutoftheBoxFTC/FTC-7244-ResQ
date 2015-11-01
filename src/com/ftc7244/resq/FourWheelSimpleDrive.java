@@ -8,9 +8,7 @@ public class FourWheelSimpleDrive extends FourWheelDriveBase {
      * with the same motor names on the OpMode on the
      * RobotController.
      */
-    public FourWheelSimpleDrive() {
-        super("motor1", "motor2", "motor3", "motor4");
-    }
+    public FourWheelSimpleDrive() {}
 
     @Override
     public void start() {
@@ -26,7 +24,7 @@ public class FourWheelSimpleDrive extends FourWheelDriveBase {
     }
 
     @Override
-    public void init() {}
+    public void init() { setMotorNames("motor_1", "motor_2", "motor_3", "motor_4"); }
 }
 
 //UNDER BUILD INTERMEDIATES

@@ -1,14 +1,17 @@
 package com.ftc7244.resq;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 
-public abstract class FourWheelDriveBase extends OpMode {
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+/**
+ * Created by Iam on 10/30/2015.
+ */
+public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
 
     protected DcMotor motor1, motor2, motor3, motor4;
 
 
-    public FourWheelDriveBase() {}
+    public FourWheelDriveBaseAuton() {}
 
     public void setMotorNames(String motorName1, String motorName2, String motorName3, String motorName4) {
         this.motor1 = getMotor(motorName1);
@@ -20,8 +23,7 @@ public abstract class FourWheelDriveBase extends OpMode {
     /**
      * Stop all motors on the robot using @link {#setPowerAll(double motorPower) setPowerAll}.
      */
-    @Override
-    public void stop() {
+    public void stopMotors() {
         setPowerAll(0);
     }
 
@@ -100,4 +102,5 @@ public abstract class FourWheelDriveBase extends OpMode {
     private DcMotor getMotor(String name) {
         return hardwareMap.dcMotor.get(name);
     }
+
 }

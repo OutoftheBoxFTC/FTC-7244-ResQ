@@ -1,4 +1,4 @@
-package com.ftc7244.resq;
+package main.java.com.ftc7244.resq;
 
 public class FourWheelSimpleDrive extends FourWheelDriveBase {
 

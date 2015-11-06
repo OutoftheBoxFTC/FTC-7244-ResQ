@@ -1,4 +1,4 @@
-package com.ftc7244.resq;
+package main.java.com.ftc7244.resq;
 
 import com.ftc7244.resq.FourWheelDriveBaseAuton;
 

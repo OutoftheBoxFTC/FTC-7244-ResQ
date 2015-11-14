@@ -1,28 +1,13 @@
-package main.java.com.ftc7244.resq;
+package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-/**
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Written By: Out of the Box on 9/14/2015
- */
+import com.qualcomm.robotcore.hardware.DcMotorController;
 
 public abstract class FourWheelDriveBase extends OpMode {
 
     protected DcMotor motor1, motor2, motor3, motor4;
 
+    private double speedRatio = 1;
 
     public FourWheelDriveBase() {}
 
@@ -53,10 +38,10 @@ public abstract class FourWheelDriveBase extends OpMode {
      * @param power4 The power to pass to motor4, should be a double between -1.0 and 1.0
      */
     public void setPower(double power1, double power2, double power3, double power4) {
-        motor1.setPower(power1);
-        motor2.setPower(power2);
-        motor3.setPower(power3);
-        motor4.setPower(power4);
+        motor1.setPower(speedRatio * power1);
+        motor2.setPower(speedRatio * power2);
+        motor3.setPower(speedRatio * power3);
+        motor4.setPower(speedRatio * power4);
     }
 
     /**
@@ -104,6 +89,17 @@ public abstract class FourWheelDriveBase extends OpMode {
         setPowerSides(getJoy1LeftY(), -getJoy1RightY());
     }
 
+    public boolean getJoyButtonY() {return gamepad1.y;}
+
+    public boolean getLeftBumper() {return gamepad1.left_bumper;}
+
+    public boolean getRightBumper() {return gamepad1.right_bumper;}
+
+    public void setSpeedRatio(double speedRatio) {
+        if(speedRatio < 1.0 && speedRatio > -1.0) this.speedRatio = speedRatio;
+    }
+
+    public double getSpeedRatio() {return speedRatio;}
     /**Get a motor from the hardware map
      *
      * The robotcontroller will setup OpModes with certain motor names

@@ -11,9 +11,7 @@ public class ScriptReaderAuton extends FourWheelDriveBaseAuton {
     @Override
     public void runOpMode() throws InterruptedException {
         try{scriptReader = ScriptReader.buildScriptReader("");}
-        catch (Exception e) { }
-        super.executeScript("Drive 0.5p 0.5p 1000mil"); //extra letters should be ignored by parse
+        catch (Exception e) {}
+        executeScript("Drive 0.5p 0.5p 1000mil"); //extra letters should be ignored by parse
     }
-
-
 }

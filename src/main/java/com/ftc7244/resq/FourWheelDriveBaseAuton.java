@@ -81,7 +81,7 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
      * @return The left joystick's y value, from the driver controller.
      */
     public float getJoy1LeftY() {
-        return gamepad1.left_stick_y;
+        return Math.abs(gamepad1.left_stick_y) > .25 ? gamepad1.left_stick_y : 0;
     }
 
     /**
@@ -89,9 +89,8 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
      * @return The right joystick's y value, from the driver controller.
      */
     public float getJoy1RightY() {
-        return gamepad1.right_stick_y;
+        return Math.abs(gamepad1.right_stick_y) > .25 ? gamepad1.right_stick_y : 0;
     }
-
 
     public void setPowerFromJoy() {
         setPowerSides(getJoy1LeftY(), -getJoy1RightY());
@@ -121,12 +120,12 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
             }
             else if(typeParameters.length == 4) {
                 setPowerSides(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]));
-                sleep(Integer.parseInt(typeParameters[3]));
+                wait(Integer.parseInt(typeParameters[3]));
             }
             else {
                 setPower(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]),
                         Double.parseDouble(typeParameters[3]), Double.parseDouble(typeParameters[4]));
-                sleep(Integer.parseInt(typeParameters[5]));
+                wait(Integer.parseInt(typeParameters[5]));
             }
         } else {
             telemetry.addData("Type", "Incorrect");

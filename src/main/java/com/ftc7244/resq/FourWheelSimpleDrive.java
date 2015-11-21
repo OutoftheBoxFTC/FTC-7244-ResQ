@@ -1,4 +1,4 @@
-package main.java.com.ftc7244.resq;
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
 public class FourWheelSimpleDrive extends FourWheelDriveBase {
 

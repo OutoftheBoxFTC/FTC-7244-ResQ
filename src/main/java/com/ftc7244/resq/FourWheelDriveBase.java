@@ -96,7 +96,7 @@ public abstract class FourWheelDriveBase extends OpMode {
     public boolean getRightBumper() {return gamepad1.right_bumper;}
 
     public void setSpeedRatio(double speedRatio) {
-        if(speedRatio < 1.0 && speedRatio > -1.0) this.speedRatio = speedRatio;
+       this.speedRatio = speedRatio;
     }
 
     public double getSpeedRatio() {return speedRatio;}

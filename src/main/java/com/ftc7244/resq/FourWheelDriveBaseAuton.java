@@ -1,18 +1,25 @@
-package main.java.com.ftc7244.resq;
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import android.hardware.SensorManager;
+
+import java.io.IOException;
 
 /**
  * Created by Iam on 10/30/2015.
  */
 public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
 
-    protected DcMotor motor1, motor2, motor3, motor4;
+    private DcMotor motor1, motor2, motor3, motor4;
+    private SensorManager sensorManager;
 
 
     public FourWheelDriveBaseAuton() {}
 
+    protected void initSensorManager() {
+//        sensorManager = (SensorManager) this.getBaseContext().getSystemService(Context.SENSOR_SERVICE);
+    }
     public void setMotorNames(String motorName1, String motorName2, String motorName3, String motorName4) {
         this.motor1 = getMotor(motorName1);
         this.motor2 = getMotor(motorName2);
@@ -74,7 +81,7 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
      * @return The left joystick's y value, from the driver controller.
      */
     public float getJoy1LeftY() {
-        return gamepad1.left_stick_y;
+        return Math.abs(gamepad1.left_stick_y) > .25 ? gamepad1.left_stick_y : 0;
     }
 
     /**
@@ -82,9 +89,8 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
      * @return The right joystick's y value, from the driver controller.
      */
     public float getJoy1RightY() {
-        return gamepad1.right_stick_y;
+        return Math.abs(gamepad1.right_stick_y) > .25 ? gamepad1.right_stick_y : 0;
     }
-
 
     public void setPowerFromJoy() {
         setPowerSides(getJoy1LeftY(), -getJoy1RightY());
@@ -103,4 +109,28 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
         return hardwareMap.dcMotor.get(name);
     }
 
+    protected String executeScript(String scriptText) throws InterruptedException {
+        String[] typeParameters = scriptText.split(" ");
+        String type = typeParameters[0];
+        if(type.equalsIgnoreCase("drive")) {
+            telemetry.addData("Drive?", "Drive!");
+            if(typeParameters.length != 4 && typeParameters.length != 6) { //type, [powers], time
+                telemetry.addData("psych", "those the wrong paramatahs");
+                return "badParams";
+            }
+            else if(typeParameters.length == 4) {
+                setPowerSides(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]));
+                wait(Integer.parseInt(typeParameters[3]));
+            }
+            else {
+                setPower(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]),
+                        Double.parseDouble(typeParameters[3]), Double.parseDouble(typeParameters[4]));
+                wait(Integer.parseInt(typeParameters[5]));
+            }
+        } else {
+            telemetry.addData("Type", "Incorrect");
+            return "Wrong Type";
+        }
+        return "done";
+    }
 }

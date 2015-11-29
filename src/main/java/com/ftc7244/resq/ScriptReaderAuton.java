@@ -12,6 +12,9 @@ public class ScriptReaderAuton extends FourWheelDriveBaseAuton {
     public void runOpMode() throws InterruptedException {
         try{scriptReader = ScriptReader.buildScriptReader("");}
         catch (Exception e) {}
-        executeScript("Drive 0.5p 0.5p 1000mil"); //extra letters should be ignored by parse
+        executeScript("Drive 0.5 0.5 1000"); //extra letters should be ignored by parse jk this isnt js
+        executeScript("Drive -0.5 -0.5", "Time 1000");//Test both - This uses the endcon
+
+
     }
 }

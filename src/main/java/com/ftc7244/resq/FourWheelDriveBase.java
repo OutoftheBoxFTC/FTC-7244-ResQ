@@ -1,19 +1,18 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 
 public abstract class FourWheelDriveBase extends OpMode {
 
     protected DcMotor motor1, motor2, motor3, motor4;
 
-    private double speedRatio = 1;
+    protected double speedRatio = 1;
 
     public FourWheelDriveBase() {}
 
     public void setMotorNames(String motorName1, String motorName2, String motorName3, String motorName4) {
         this.motor1 = getMotor(motorName1);
-        this.motor2 = getMotor(motorName2);
+        this.motor2 = getMotor(motorName2); //make sure it only runs at half speed; not sure it will work.
         this.motor3 = getMotor(motorName3);
         this.motor4 = getMotor(motorName4);
     }
@@ -39,9 +38,9 @@ public abstract class FourWheelDriveBase extends OpMode {
      */
     public void setPower(double power1, double power2, double power3, double power4) {
         motor1.setPower(speedRatio * power1);
-        motor2.setPower(speedRatio * power2);
+        motor2.setPower(speedRatio * power2 * .5);
         motor3.setPower(speedRatio * power3);
-        motor4.setPower(speedRatio * power4);
+        motor4.setPower(speedRatio * power4 * .5);
     }
 
     /**

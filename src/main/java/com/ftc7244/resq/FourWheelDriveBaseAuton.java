@@ -2,9 +2,12 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import android.hardware.SensorManager;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by Iam on 10/30/2015.
@@ -13,13 +16,14 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
 
     private DcMotor motor1, motor2, motor3, motor4;
     private SensorManager sensorManager;
-
+    HashMap<String, Servo> servoHashMap = new HashMap<String, Servo>(12); //for if we have servos we need in Auton
 
     public FourWheelDriveBaseAuton() {}
 
     protected void initSensorManager() {
 //        sensorManager = (SensorManager) this.getBaseContext().getSystemService(Context.SENSOR_SERVICE);
     }
+
     public void setMotorNames(String motorName1, String motorName2, String motorName3, String motorName4) {
         this.motor1 = getMotor(motorName1);
         this.motor2 = getMotor(motorName2);
@@ -109,7 +113,20 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
         return hardwareMap.dcMotor.get(name);
     }
 
-    protected String executeScript(String scriptText) throws InterruptedException {
+    public long toNano(long val) {
+        return val * 1000000000;
+    }
+
+    protected void stopFor(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            telemetry.addData("psych", "Error in wait");
+        }
+    }
+
+    //Copyright Laura
+    protected String executeScript(String scriptText) throws InterruptedException { //defaults to time param
         String[] typeParameters = scriptText.split(" ");
         String type = typeParameters[0];
         if(type.equalsIgnoreCase("drive")) {
@@ -120,16 +137,57 @@ public abstract class FourWheelDriveBaseAuton extends LinearOpMode{
             }
             else if(typeParameters.length == 4) {
                 setPowerSides(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]));
-                wait(Integer.parseInt(typeParameters[3]));
+                stopFor(Integer.parseInt(typeParameters[3]));
             }
             else {
                 setPower(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]),
                         Double.parseDouble(typeParameters[3]), Double.parseDouble(typeParameters[4]));
-                wait(Integer.parseInt(typeParameters[5]));
+                stopFor(Integer.parseInt(typeParameters[5]));
             }
         } else {
             telemetry.addData("Type", "Incorrect");
             return "Wrong Type";
+        }
+        return "done";
+    }
+
+    protected String executeScript(String scriptText, String endCon) throws InterruptedException {
+        String[] typeParameters = scriptText.split(" ");
+        String[] endCons = endCon.split(" ");
+        if(endCons.length < 2) {
+            return "not enough params on endcon";
+        }
+        String type = typeParameters[0];
+        String endConType = endCons[0];
+
+        if(type.equalsIgnoreCase("drive")) {
+            telemetry.addData("Drive?", "Drive!");
+            if(typeParameters.length != 3 && typeParameters.length != 5) { //type, [powers]
+                telemetry.addData("psych", "those the wrong paramatahs");
+                return "badParams";
+            }
+            else if(typeParameters.length == 3) {
+                setPowerSides(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]));
+            }
+            else {
+                setPower(Double.parseDouble(typeParameters[1]), Double.parseDouble(typeParameters[2]),
+                        Double.parseDouble(typeParameters[3]), Double.parseDouble(typeParameters[4]));
+
+            }
+        } else {
+            telemetry.addData("Type", "Incorrect");
+            return "Wrong Type";
+        }
+
+
+        //Waiting Code
+
+        if(endConType.equalsIgnoreCase("time")) {
+            stopFor(Integer.parseInt(endCons[1]));
+        } else if(endConType.equalsIgnoreCase("encoder")) {
+            //Add Encoder Code here
+        } else if(endConType.equalsIgnoreCase("gyro")) {
+            //Add Gyro Code here
         }
         return "done";
     }
